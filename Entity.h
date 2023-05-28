@@ -23,25 +23,25 @@ public:
 
 	~Entity();
 	
-	void setID(int iNewID);
-	void setPosition(Vector2f vfNewPosition);
-	void setSprite(ae::Sprite sprNewSprite);
-	void setTexture(std::string sTexturePath);
-	void setBody(Body bodNewBody);
-	void setSpriteSize(Vector2f vfNewSize);
-	void setBodySize(Vector2f vfNewSize);
+	void		 setID(int iNewID);
+	void		 setPosition(Vector2f vfNewPosition);
+	void		 setSprite(ae::Sprite sprNewSprite);
+	void		 setTexture(std::string sTexturePath);
+	void		 setBody(Body bodNewBody);
+	void		 setSpriteSize(Vector2f vfNewSize);
+	void		 setBodySize(Vector2f vfNewSize);
 	virtual void setOrigin(Vector2f vfNewOrigin);
-	void setRotation(float fAngle);
+	void		 setRotation(float fAngle);
 	
-	int getID();
-	Vector2f getPosition();
-	ae::Sprite* getSprite();
-	Body* getBody();
-	float getAngle();
+	int			 getID();
+	Vector2f	 getPosition();
+	ae::Sprite*  getSprite();
+	Body*		 getBody();
+	float		 getAngle();
 
-	void rotate(float fAngle);
-	void move(Vector2f vfDirection);
-	void moveOrigin(Vector2f vfMovement);
+	void		 rotate(float fAngle);
+	void		 move(Vector2f vfDirection);
+	void		 moveOrigin(Vector2f vfMovement);
 
 	virtual void show(RenderWindow& window);
 };

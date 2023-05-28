@@ -18,6 +18,7 @@ MovingEntity::MovingEntity(int iID, Vector2f vfPos, ae::Sprite sprSprite, Body b
 
 MovingEntity::~MovingEntity()
 {
+	if(_dmCurentDirection)
 	delete _dmCurentDirection;
 }
 
@@ -36,9 +37,17 @@ void MovingEntity::setAngularVelosity(float fNewAngularVelosity)
 	this->_fAngularVelosity = fNewAngularVelosity;
 }
 
+void MovingEntity::setMovements(std::vector<DirectionalMovement> vmvNewMovements)
+{
+}
+
 void MovingEntity::setMaxAngularVelosity(float fNewMaxAngularVelosity)
 {
 	this->_fMaxAngularVelosity = fNewMaxAngularVelosity;
+}
+
+void MovingEntity::setResultingDirection(DirectionalMovement dmCurentDirection)
+{
 }
 
 void MovingEntity::setAngularAcceleration(float fNewAngularAcceleration)
@@ -122,3 +131,7 @@ void MovingEntity::RotationSlowDown(float fHandlingTime, int iSlowingCoefficient
 
 
 
+void MovingEntity::AccelerateForward(float fHandlingTime)
+{
+
+}

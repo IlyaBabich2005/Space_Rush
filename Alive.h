@@ -12,7 +12,7 @@ public:
 
 	Alive(int iID, Vector2f vfPos, ae::Sprite sprSprite, Body bodBody, int iHP);
 
-	int getHP();
+	int  getHP();
 	void setHP(int iNewHP);
 
 	bool IsAlive();

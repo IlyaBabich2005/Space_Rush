@@ -14,8 +14,8 @@ private:
 									 _fMaxAngularVelosity;
 
 	std::vector<DirectionalMovement> _vdmMovements;
-	DirectionalMovement				 *_dmCurentDirection,
-									  _dmResultingDirection;
+	DirectionalMovement				*_dmCurentDirection,
+									 _dmResultingDirection;
 public:	
 	MovingEntity();
 
@@ -23,33 +23,35 @@ public:
 
 	~MovingEntity();
 
-	void setMaxSpeed(float fNewMaxSpeed);
-	void setAcceleration(float fNewAcceleration);		
-	void setAngularVelosity(float fNewAngularVelosity);
-	void setAngularAcceleration(float fNewAngularAcceleration);
-	void setMaxAngularVelosity(float fNewMaxAngularVelosity);
-	void setMovements(std::vector<DirectionalMovement> vmvNewMovements);
-	void setCurentDirection(DirectionalMovement &dmCurentDirection);
-	void setCurentDirection();
-	void setResultingDirection(DirectionalMovement dmCurentDirection);
 
-	float getMaxSpeed();
-	float getAcceleration();
-	float getAngularVelosity();
-	float getAngularAcceleration();
-	float getMaxAngularVelosity();
+
+	void							 setMaxSpeed(float fNewMaxSpeed);
+	void							 setAcceleration(float fNewAcceleration);		
+	void							 setAngularVelosity(float fNewAngularVelosity);
+	void							 setAngularAcceleration(float fNewAngularAcceleration);
+	void							 setMaxAngularVelosity(float fNewMaxAngularVelosity);
+	void							 setMovements(std::vector<DirectionalMovement> vmvNewMovements);
+	void							 setCurentDirection(DirectionalMovement &dmCurentDirection);
+	void							 setResultingDirection(DirectionalMovement dmCurentDirection);
+
+	float							 getMaxSpeed();
+	float							 getAcceleration();
+	float							 getAngularVelosity();
+	float							 getAngularAcceleration();
+	float							 getMaxAngularVelosity();
 	std::vector<DirectionalMovement> getMovements();
-	DirectionalMovement* getCurentDirection();
-	DirectionalMovement getResultingDirection();
+	DirectionalMovement*			 getCurentDirection();
+	DirectionalMovement				 getResultingDirection();
 
-	virtual void MoveSet();
+	virtual void					 MoveSet();
 
-	void AccelerateClockwise(float fHandlingTime);
-	void AccelerateCounterclockwise(float fHandlingTime);
-	void RotationSlowDown(float fHandlingTime, int iSlowingcoefficient);
+	void							 AccelerateClockwise(float fHandlingTime);
+	void							 AccelerateCounterclockwise(float fHandlingTime);
+	void							 RotationSlowDown(float fHandlingTime, int iSlowingCoefficient);
 
-	void AccelerateForward();
-	void AccelerateBack();
-	void MovingSlowDown();
-	void CulculateResultingVector();
+	void							 foundCurentDirection();
+	void							 AccelerateForward(float fHandlingTime);
+	void							 AccelerateBack(float fHandlingTime);
+	void							 MovingSlowDown(float fHandlingTime);
+	void							 CulculateResultingVector(float fHandlingTime);
 };

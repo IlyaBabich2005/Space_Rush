@@ -36,6 +36,12 @@ ae::Sprite::Sprite(Sprite& sprSourceSprite)
 	_rsContainer.setOrigin(Math::GetRectangleCentre(_rsContainer));
 }
 
+ae::Sprite::~Sprite()
+{
+	if(_tTexture)
+	delete _tTexture;
+}
+
 sf::RectangleShape ae::Sprite::getContainer()
 {
 	return _rsContainer;
