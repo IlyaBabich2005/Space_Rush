@@ -1,19 +1,20 @@
 #include "Math.h"
 
-Vector2f Math::GetRectangleCentre(RectangleShape rsSourceShape)
+using namespace MATH;
 
+Vector2f Math::GetRectangleCentre(RectangleShape rsSourceShape)
 {
 	return { rsSourceShape.getSize().x / 2, rsSourceShape.getSize().y / 2 };
 }
 
 float Math::asRadians(float fDegrees)
 {
-	return 3.14159265 / 180 * fDegrees;
+	return PI_rad / PI_ang * fDegrees;
 }
 
 float Math::asDegrees(float fRadians)
 {
-	return fRadians * 180 / 3.14159265;
+	return fRadians * PI_ang / PI_rad;
 }
 
 Vector2f Math::ExpendVector(float fAngle)

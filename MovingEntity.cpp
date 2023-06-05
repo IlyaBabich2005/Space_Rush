@@ -5,7 +5,7 @@ MovingEntity::MovingEntity()
 	this->_fMaxSpeed = 0;
 	this->_fAcceleration = 0;
 
-	_dmCurentDirection = NULL;
+	_dmCurentMovement = NULL;
 }
 
 MovingEntity::MovingEntity(int iID, Vector2f vfPos, ae::Sprite sprSprite, Body bodBody) :
@@ -13,13 +13,13 @@ MovingEntity::MovingEntity(int iID, Vector2f vfPos, ae::Sprite sprSprite, Body b
 	_fMaxSpeed(0),
 	_fAcceleration(0) 
 {
-	_dmCurentDirection = NULL;
+	_dmCurentMovement = NULL;
 };
 
 MovingEntity::~MovingEntity()
 {
-	if(_dmCurentDirection)
-	delete _dmCurentDirection;
+	if(_dmCurentMovement)
+	delete _dmCurentMovement;
 }
 
 void MovingEntity::setMaxSpeed(float fNewMaxSpeed)
@@ -37,8 +37,9 @@ void MovingEntity::setAngularVelosity(float fNewAngularVelosity)
 	this->_fAngularVelosity = fNewAngularVelosity;
 }
 
-void MovingEntity::setMovements(std::vector<DirectionalMovement> vmvNewMovements)
+void MovingEntity::setMovements(std::vector<DirectionalMovement> vdmNewMovements)
 {
+	this->_vdmMovements = vdmNewMovements;
 }
 
 void MovingEntity::setMaxAngularVelosity(float fNewMaxAngularVelosity)
@@ -48,6 +49,7 @@ void MovingEntity::setMaxAngularVelosity(float fNewMaxAngularVelosity)
 
 void MovingEntity::setResultingDirection(DirectionalMovement dmCurentDirection)
 {
+	this->_dmCurentMovement = &dmCurentDirection;
 }
 
 void MovingEntity::setAngularAcceleration(float fNewAngularAcceleration)
@@ -131,7 +133,30 @@ void MovingEntity::RotationSlowDown(float fHandlingTime, int iSlowingCoefficient
 
 
 
+void MovingEntity::SetCurentMovement()
+{
+	const int NUM_OF_MOVEMENTS = _vdmMovements.size();
+
+	for (int MOVEMENT_INDEX = 0; MOVEMENT_INDEX < NUM_OF_MOVEMENTS; MOVEMENT_INDEX++)
+	{
+		auto  MOVEMENT = &_vdmMovements[MOVEMENT_INDEX];
+		int	  MOVEMENT_ANGLE = MOVEMENT->getAngle(),
+			  CURENT_ANGLE = this->getAngle();
+
+		if (MOVEMENT_ANGLE == CURENT_ANGLE)
+		{
+			this->_dmCurentMovement = MOVEMENT;
+			//bIsNewMovement = false;
+			break;
+		}
+	}
+}
+
 void MovingEntity::AccelerateForward(float fHandlingTime)
 {
 
+}
+
+void MovingEntity::AccelerateBack(float fHandlingTime)
+{
 }

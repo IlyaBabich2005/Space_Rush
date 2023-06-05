@@ -7,7 +7,7 @@ namespace ae
 	class Sprite
 	{
 	private:
-		sf::RectangleShape _rsContainer;
+		sf::RectangleShape	  _rsContainer;
 		sf::Texture*		  _tTexture;
 	public:
 		Sprite();

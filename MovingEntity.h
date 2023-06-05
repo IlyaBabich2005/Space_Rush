@@ -14,8 +14,8 @@ private:
 									 _fMaxAngularVelosity;
 
 	std::vector<DirectionalMovement> _vdmMovements;
-	DirectionalMovement				*_dmCurentDirection,
-									 _dmResultingDirection;
+	DirectionalMovement				*_dmCurentMovement,
+									 _dmResultingMovement;
 public:	
 	MovingEntity();
 
@@ -23,16 +23,14 @@ public:
 
 	~MovingEntity();
 
-
-
 	void							 setMaxSpeed(float fNewMaxSpeed);
 	void							 setAcceleration(float fNewAcceleration);		
 	void							 setAngularVelosity(float fNewAngularVelosity);
 	void							 setAngularAcceleration(float fNewAngularAcceleration);
 	void							 setMaxAngularVelosity(float fNewMaxAngularVelosity);
-	void							 setMovements(std::vector<DirectionalMovement> vmvNewMovements);
-	void							 setCurentDirection(DirectionalMovement &dmCurentDirection);
-	void							 setResultingDirection(DirectionalMovement dmCurentDirection);
+	void							 setMovements(std::vector<DirectionalMovement> vdmNewMovements);
+	void							 setCurentMovement(DirectionalMovement &dmCurentDirection);
+	void							 setResultingMovement(DirectionalMovement dmCurentDirection);
 
 	float							 getMaxSpeed();
 	float							 getAcceleration();
@@ -40,8 +38,8 @@ public:
 	float							 getAngularAcceleration();
 	float							 getMaxAngularVelosity();
 	std::vector<DirectionalMovement> getMovements();
-	DirectionalMovement*			 getCurentDirection();
-	DirectionalMovement				 getResultingDirection();
+	DirectionalMovement*			 getCurentMovement();
+	DirectionalMovement				 getResultingMovement();
 
 	virtual void					 MoveSet();
 
@@ -49,7 +47,7 @@ public:
 	void							 AccelerateCounterclockwise(float fHandlingTime);
 	void							 RotationSlowDown(float fHandlingTime, int iSlowingCoefficient);
 
-	void							 foundCurentDirection();
+	void							 SetCurentMovement();
 	void							 AccelerateForward(float fHandlingTime);
 	void							 AccelerateBack(float fHandlingTime);
 	void							 MovingSlowDown(float fHandlingTime);
