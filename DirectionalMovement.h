@@ -5,6 +5,7 @@
 #include "Math.h"
 
 using namespace sf;
+using namespace MATH;
 
 class DirectionalMovement
 {

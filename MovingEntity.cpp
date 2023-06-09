@@ -22,6 +22,11 @@ MovingEntity::~MovingEntity()
 	delete _dmCurentMovement;
 }
 
+void MovingEntity::IsAccelerated(bool bIsAccelerated)
+{
+	this->_bIsAccelerated = bIsAccelerated;
+}
+
 void MovingEntity::setMaxSpeed(float fNewMaxSpeed)
 {
 	this->_fMaxSpeed = fNewMaxSpeed;
@@ -47,7 +52,7 @@ void MovingEntity::setMaxAngularVelosity(float fNewMaxAngularVelosity)
 	this->_fMaxAngularVelosity = fNewMaxAngularVelosity;
 }
 
-void MovingEntity::setResultingDirection(DirectionalMovement dmCurentDirection)
+void MovingEntity::setResultingMovement(DirectionalMovement dmCurentDirection)
 {
 	this->_dmCurentMovement = &dmCurentDirection;
 }
@@ -74,9 +79,19 @@ float MovingEntity::getAngularVelosity()
 	return _fAngularVelosity;
 }
 
+bool MovingEntity::IsAccelerated()
+{
+	return this->_bIsAccelerated;
+}
+
 float MovingEntity::getMaxAngularVelosity()
 {
 	return this->_fMaxAngularVelosity;
+}
+
+std::vector<DirectionalMovement> MovingEntity::getMovements()
+{
+	return this->_vdmMovements;
 }
 
 float MovingEntity::getAngularAcceleration()
@@ -89,18 +104,23 @@ float MovingEntity::getAngularAcceleration()
 void MovingEntity::MoveSet()
 {
 
-};
+}
 
 
 
 void MovingEntity::AccelerateClockwise(float fHandlingTime)
 {
-	if (_fAngularVelosity < _fMaxAngularVelosity)
+	float FRAME_ANGULAR_ACCELERATION = fHandlingTime * this->_fAngularAcceleration;
+	float ROTATION_ANGLE = 0.f;
+
+	if (this->_fAngularVelosity < this->_fMaxAngularVelosity)
 	{
-		_fAngularVelosity += fHandlingTime * _fAngularAcceleration;
+		this->_fAngularVelosity += FRAME_ANGULAR_ACCELERATION;
 	}
 
-	rotate(fHandlingTime * _fAngularVelosity);
+	ROTATION_ANGLE = fHandlingTime * _fAngularVelosity;
+
+	rotate(ROTATION_ANGLE);
 }
 
 void MovingEntity::AccelerateCounterclockwise(float fHandlingTime)
@@ -136,27 +156,95 @@ void MovingEntity::RotationSlowDown(float fHandlingTime, int iSlowingCoefficient
 void MovingEntity::SetCurentMovement()
 {
 	const int NUM_OF_MOVEMENTS = _vdmMovements.size();
+	int CURRENT_ANGLE = this->getAngle();
+	bool IS_NEW_MOVEMENT = true;
 
 	for (int MOVEMENT_INDEX = 0; MOVEMENT_INDEX < NUM_OF_MOVEMENTS; MOVEMENT_INDEX++)
 	{
 		auto  MOVEMENT = &_vdmMovements[MOVEMENT_INDEX];
-		int	  MOVEMENT_ANGLE = MOVEMENT->getAngle(),
-			  CURENT_ANGLE = this->getAngle();
+		int	  MOVEMENT_ANGLE = MOVEMENT->getAngle();
 
-		if (MOVEMENT_ANGLE == CURENT_ANGLE)
+		if (MOVEMENT_ANGLE == CURRENT_ANGLE)
 		{
 			this->_dmCurentMovement = MOVEMENT;
-			//bIsNewMovement = false;
+			IS_NEW_MOVEMENT = false;
 			break;
 		}
+	}
+
+	if (IS_NEW_MOVEMENT)
+	{
+		this->_vdmMovements.push_back(DirectionalMovement{});
+		this->_dmCurentMovement = &this->_vdmMovements.back();
+		this->_dmCurentMovement->setAngle(CURRENT_ANGLE);
 	}
 }
 
 void MovingEntity::AccelerateForward(float fHandlingTime)
 {
+	const float FRAME_ACELERATION = fHandlingTime * this->_fAcceleration;
+	const float CURRENT_SPEED = _dmCurentMovement->getSpeed();
+	const float NEW_SPEED = CURRENT_SPEED + FRAME_ACELERATION;
 
+	if (_dmCurentMovement->getSpeed() < _fMaxSpeed)
+	{
+		_dmCurentMovement->setSpeed(NEW_SPEED);
+	}
+
+	this->_bIsAccelerated = true;
 }
 
 void MovingEntity::AccelerateBack(float fHandlingTime)
 {
+	const float FRAME_ACELERATION = fHandlingTime * this->_fAcceleration;
+	const float CURRENT_SPEED = _dmCurentMovement->getSpeed();
+	const float NEW_SPEED = CURRENT_SPEED - FRAME_ACELERATION;
+
+	if (_dmCurentMovement->getSpeed() > -_fMaxSpeed)
+	{
+		_dmCurentMovement->setSpeed(NEW_SPEED);
+	}
+
+	this->_bIsAccelerated = true;
+}
+
+void MovingEntity::MovingSlowDown(float fHandlingTime, int iSlowingCoefficient)
+{
+	const float FRAME_DECCELERATION_RATE = fHandlingTime * this->_fAcceleration / iSlowingCoefficient;
+
+	for (int i = 0; i < this->_vdmMovements.size(); i++)
+	{
+		if (!this->_bIsAccelerated or (this->_bIsAccelerated and this->_dmCurentMovement != &this->_vdmMovements[i]))
+		{
+			if (abs(_vdmMovements[i].getSpeed()) > 1)
+			{
+				if (_vdmMovements[i].getSpeed() > 0)
+				{
+					_vdmMovements[i].setSpeed(_vdmMovements[i].getSpeed() - FRAME_DECCELERATION_RATE);
+				}
+				if (_vdmMovements[i].getSpeed() < 0)
+				{
+					_vdmMovements[i].setSpeed(_vdmMovements[i].getSpeed() + FRAME_DECCELERATION_RATE);
+				}
+			}
+			else
+			{
+				_vdmMovements.erase(_vdmMovements.begin() + i);
+				i--;
+				continue;
+			}
+		}
+	}
+}
+
+void MovingEntity::CalculateResultingMovement(float fHandlingTime)
+{
+	const int NUM_OF_MOVEMENTS = this->_vdmMovements.size();
+
+	for (int MOVEMENT_INDEX = 0; MOVEMENT_INDEX < NUM_OF_MOVEMENTS; MOVEMENT_INDEX++)
+	{
+		
+
+		
+	}
 }

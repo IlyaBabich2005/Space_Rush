@@ -1,6 +1,8 @@
 #pragma once
 #include "Math.h"
 
+using namespace MATH;
+
 #define SHOW_HITBOXES
 
 class Body 

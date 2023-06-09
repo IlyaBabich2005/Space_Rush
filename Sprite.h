@@ -2,6 +2,8 @@
 #include "Math.h"
 #include "Paths.h"
 
+using namespace MATH;
+
 namespace ae
 {
 	class Sprite

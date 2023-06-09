@@ -32,9 +32,22 @@ float Math::NormoliizeVector(Vector2f vfSourceVector)
 	return sqrt(pow(vfSourceVector.x, 2) + pow(vfSourceVector.y, 2));
 }
 
-float Math::GetAngle(Vector2f vfSourceVector)
+float Math::VecotrAnlge(Vector2f vfSourceVector)
 {
-	float fLength = NormoliizeVector(vfSourceVector);
+	if (float VECTORS_LENGTH = NormoliizeVector(vfSourceVector))
+		return asDegrees(asin(vfSourceVector.y / VECTORS_LENGTH));
+}
 
-	return asDegrees(asin(vfSourceVector.y / fLength));
+float MATH::Math::dot(Vector2f vfFirstVector, Vector2f vfSecondVector)
+{
+	return vfFirstVector.x * vfSecondVector.x + vfFirstVector.y * vfSecondVector.y;
+}
+
+float MATH::Math::AngleBetwenVectors(Vector2f vfFirstVector, Vector2f vfSecondVector)
+{
+	const float FIRST_VECTOR_LENGTH = NormoliizeVector(vfFirstVector);
+	const float SECOND_VECTOR_LENGTH = NormoliizeVector(vfSecondVector);
+
+	if (FIRST_VECTOR_LENGTH && SECOND_VECTOR_LENGTH)
+		return asDegrees(acos(dot(vfFirstVector, vfSecondVector) / FIRST_VECTOR_LENGTH * SECOND_VECTOR_LENGTH));
 }

@@ -7,6 +7,7 @@
 class MovingEntity : public Entity
 {
 private:
+	bool							 _bIsAccelerated;
 	float							 _fMaxSpeed,
 									 _fAcceleration,
 								     _fAngularVelosity,
@@ -23,6 +24,7 @@ public:
 
 	~MovingEntity();
 
+	void							 IsAccelerated(bool bisAccelerated);
 	void							 setMaxSpeed(float fNewMaxSpeed);
 	void							 setAcceleration(float fNewAcceleration);		
 	void							 setAngularVelosity(float fNewAngularVelosity);
@@ -32,6 +34,7 @@ public:
 	void							 setCurentMovement(DirectionalMovement &dmCurentDirection);
 	void							 setResultingMovement(DirectionalMovement dmCurentDirection);
 
+	bool							 IsAccelerated();
 	float							 getMaxSpeed();
 	float							 getAcceleration();
 	float							 getAngularVelosity();
@@ -50,6 +53,6 @@ public:
 	void							 SetCurentMovement();
 	void							 AccelerateForward(float fHandlingTime);
 	void							 AccelerateBack(float fHandlingTime);
-	void							 MovingSlowDown(float fHandlingTime);
-	void							 CulculateResultingVector(float fHandlingTime);
+	void							 MovingSlowDown(float fHandlingTime, int iSlowingCoefficient);
+	void							 CalculateResultingMovement(float fHandlingTime);
 };

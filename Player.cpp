@@ -55,86 +55,22 @@ void Player::KeyboardRotatingMoveSet(float fHandlingTime)
 
 void Player::KeyboardMotionMoveSet(float fHandlingTime)
 {
-	DirectionalMovement* vfCurentMovement = NULL;
-	bool bIsNewDirection = true,
-		 bIsKeyPressed = false;
-	Vector2f vfMovement = { 0,0 };
-	float fDeltaAngle;
-
-	//check is curent direction exist
-	for (int i = 0; i < _vmvMovements.size(); i++)
-	{
-		if ((int)_vmvMovements[i].getAngle() == (int)getAngle())
-		{
-			vfCurentMovement = &_vmvMovements[i];
-			bIsNewDirection = false;
-			break;
-		}
-	}
-
-	for (int i = 0; i < _vmvMovements.size(); i++)
-	{
-		vfMovement = vfMovement + (_vmvMovements[i].getDirection() * _vmvMovements[i].getSpeed());
-	}
-
-	if (bIsNewDirection)
-	{
-		this->_vmvMovements.push_back(DirectionalMovement{});
-		vfCurentMovement = &_vmvMovements[_vmvMovements.size() - 1];
-		vfCurentMovement->setAngle(getAngle());
-
-	}
-
-
-	//controls
 	if (Keyboard::isKeyPressed(Keyboard::W))
 	{
-		bIsKeyPressed = true;
-
-		if (vfCurentMovement->getSpeed() < getMaxSpeed())
-		{
-			vfCurentMovement->setSpeed(vfCurentMovement->getSpeed() + fHandlingTime * getAcceleration());
-		}
+		AccelerateForward(fHandlingTime);
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S))
 	{
-		bIsKeyPressed = true;
-
-		if (vfCurentMovement->getSpeed() > -getMaxSpeed())
-			vfCurentMovement->setSpeed(vfCurentMovement->getSpeed() - fHandlingTime * getAcceleration());
+		AccelerateBack(fHandlingTime);
 	}
 
+	MovingSlowDown(fHandlingTime, 4);
 
-	//SlowDown
-	for (int i = 0; i < _vmvMovements.size(); i++)
-	{
-		if (!bIsKeyPressed || (bIsKeyPressed && vfCurentMovement != &_vmvMovements[i]))
-		{
-			if (abs(_vmvMovements[i].getSpeed()) > 1)
-			{
-				if (_vmvMovements[i].getSpeed() > 0)
-				{
-					_vmvMovements[i].setSpeed(_vmvMovements[i].getSpeed() - fHandlingTime * getAcceleration() / 4);
-				}
-				if (_vmvMovements[i].getSpeed() < 0)
-				{
-					_vmvMovements[i].setSpeed(_vmvMovements[i].getSpeed() + fHandlingTime * getAcceleration() / 4);
-				}
-			}
-			else
-			{
-				_vmvMovements.erase(_vmvMovements.begin() + i);
-				i--;
-				continue;
-			}
-		}
-
-		vfMovement = vfMovement + (_vmvMovements[i].getDirection() * _vmvMovements[i].getSpeed());
-	}
 
 
 	//move
-	move(fHandlingTime * vfMovement);
+	move(fHandlingTime * );
+
 	if (getPosition().x > 1920)
 	{
 		setPosition({ 1920, getPosition().y });
